@@ -5,9 +5,9 @@ class NEGraphicCardSpider(scrapy.Spider):
 
     def start_requests(self):
         page_num = 1
-        max_page = 2
+        max_page = 100
 
-        while page_num < max_page:
+        while page_num <= max_page:
             yield scrapy.Request(
                 url="https://www.newegg.ca/GPUs-Video-Graphics-Cards/SubCategory/ID-48/Page-{0}?Tid=7708".format(page_num),
                 callback=self.parse

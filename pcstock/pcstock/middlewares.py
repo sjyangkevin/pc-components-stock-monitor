@@ -3,13 +3,20 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import random
+
 from scrapy import signals
+from pcstock.settings import USER_AGENTS
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+class RotateUserAgentMiddleware:
+    def process_request(self, request, spider):
+        user_agent = random.choice(USER_AGENTS)
+        request.headers['User-Agent'] = user_agent
 
-class CrawlerSpiderMiddleware:
+class PcstockSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -56,7 +63,7 @@ class CrawlerSpiderMiddleware:
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-class CrawlerDownloaderMiddleware:
+class PcstockDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.

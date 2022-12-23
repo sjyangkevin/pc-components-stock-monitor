@@ -10,3 +10,8 @@ build/
 *.egg-info/
 
 *.jsonl
+
+.env
+
+mongo/db
+mongo/mongod.conf

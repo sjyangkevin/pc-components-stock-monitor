@@ -7,6 +7,8 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
 BOT_NAME = 'pcstock'
 
 SPIDER_MODULES = ['pcstock.spiders']
@@ -105,3 +107,8 @@ USER_AGENTS = [
    'Mozilla/5.0 (iPhone; CPU iPhone OS 15_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6.1 Mobile/15E148 Safari/604.1',
    'Mozilla/5.0 (X11; CrOS x86_64 13904.66.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
 ]
+
+# Set up mongodb connection
+MONGO_URI = f'mongodb://{os.environ.get("MONGO_USERNAME")}:{os.environ.get("MONGO_PASSWORD")}@mongo:27017/'
+MONGO_DATABASE = os.environ.get('MONGO_DATABASE')
+MONGO_COLLECTION = os.environ.get('PRODUCT_COLLECTION')

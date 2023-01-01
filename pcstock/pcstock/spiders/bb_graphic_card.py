@@ -70,10 +70,10 @@ class BBGraphicCardSpider(scrapy.Spider):
                 response.xpath('//span[contains(@class, "availabilityMessage_3ZSBM")]/text()').get()
             )
         )
-        loader.add_value('on_stock', 'Not Available')
-        loader.add_value('bc_stock', 'Not Available')
-        loader.add_value('qc_stock', 'Not Available')
-        loader.add_value('ns_stock', 'Not Available')
+        loader.add_value('on_stock', 'No Information')
+        loader.add_value('bc_stock', 'No Information')
+        loader.add_value('qc_stock', 'No Information')
+        loader.add_value('ns_stock', 'No Information')
         loader.add_value(
             'last_updated',
             datetime.now().strftime("%Y/%m/%d %H:%M:%S")

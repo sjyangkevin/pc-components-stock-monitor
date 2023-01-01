@@ -1,6 +1,22 @@
 version: '3.1'
 
 services:
+  flask:
+    build: ./web
+    depends_on:
+      - mongo
+      - scrapy
+    ports:
+      - 5000:5000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      MONGO_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/
+    volumes:
+      - ./web:/usr/src/app
+
   scrapy:
     build: ./pcstock
     depends_on:

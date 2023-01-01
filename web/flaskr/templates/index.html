@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="{{ url_for('static', filename='bootstrap-5.2.3-dist/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='datatables.min.css') }}" rel="stylesheet">
+
+    <title>PC Component Stock Viewer</title>
+</head>
+<body class="bg-secondary-subtle">
+    <div class="container">
+        <div class="row mb-4">
+            <nav class="navbar bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand text-white" href="{{ url_for('index.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-pci-card" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .5.5V4h13.5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H2v2.5a.5.5 0 0 1-1 0V2H.5a.5.5 0 0 1-.5-.5Z"/>
+                            <path d="M3 12.5h3.5v1a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5v-1Zm4 0h4v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1Z"/>
+                        </svg>
+                        Graphic Card Stock Viewer
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="row mt-4 mb-4">
+
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <form method="POST" action="{{ url_for('index.index') }}">
+                    {{ form.hidden_tag() }}
+                    <div class = "row">
+                        <div class="col">
+                            {{ form.submit(class='form-control rounded-0 btn btn-outline-success') }}
+                        </div>
+                        <div class="col">
+                            <a class="form-control rounded-0 btn btn-outline-danger" href="{{ url_for('index.index') }}">
+                                Reset
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row pt-2 small">
+                        <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                            <button class="btn btn-dark rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#source-filter" aria-expanded="false" aria-controls="source-filter">
+                                Source
+                            </button>
+                            <table class="collapse list-group text-start show" id="source-filter">
+                                <tr>
+                                    <td class="pt-2">{{ form.source_bestbuy(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.source_bestbuy.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.source_canadacomputers(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.source_canadacomputers.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.source_newegg(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.source_newegg.label(class='control-label') }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row pt-2 small">
+                        <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                            <button class="btn btn-dark rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#brand-filter" aria-expanded="false" aria-controls="brand-filter">
+                                Manufacturer
+                            </button>
+                            <table class="collapse list-group text-start show" id="brand-filter">
+                                <tr>
+                                    <td class="pt-2">{{ form.ASRock(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.ASRock.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.ASUS(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.ASUS.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.CornElectronics(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.CornElectronics.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.EVGA(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.EVGA.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GIGABYTE(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GIGABYTE.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.HP(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.HP.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.INTEL(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.INTEL.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.MAXSUN(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.MAXSUN.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.MSI(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.MSI.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.NVIDIA(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.NVIDIA.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.PNY(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.PNY.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.SAPPHIRE(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.SAPPHIRE.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.VisionTek(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.VisionTek.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.ZOTAC(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.ZOTAC.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.POWERCOLOR(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.POWERCOLOR.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.yeston(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.yeston.label(class='control-label') }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row pt-2 small">
+                        <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                            <button class="btn btn-dark rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#name-filter" aria-expanded="false" aria-controls="name-filter">
+                                Type
+                            </button>
+                            <table class="collapse list-group text-start show" id="name-filter">
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_4090(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_4090.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_4080(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_4080.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3090(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3090.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3080_Ti(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3080_Ti.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3080(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3080.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3070_Ti(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3070_Ti.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3070(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3070.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3060_Ti(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3060_Ti.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3060(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3060.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3050(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_3050.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_2060_Super(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_2060_Super.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_RTX_2060(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_RTX_2060.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1660_Ti(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1660_Ti.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1660_Super(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1660_Super.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1660(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1660.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1650_Super(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1650_Super.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1650(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1650.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1000_Series(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.GeForce_GTX_1000_Series.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_7900_XTX(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_7900_XTX.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6900_6950_XT(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6900_6950_XT.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6800_XT(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6800_XT.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6800(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6800.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6700_6750_XT(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6700_6750_XT.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6600_6650_XT(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6600_6650_XT.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6600(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6600.label(class='control-label') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-2">{{ form.Radeon_RX_6500_XT(class='form-check') }}</td>
+                                    <td class="pt-2">{{ form.Radeon_RX_6500_XT.label(class='control-label') }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-10">
+                <div class="col">
+                    <table id="product-table" class="table table-hover compact">
+                        <thead>
+                            <tr>
+                                <th class="align-middle text-center"></th>
+                                <th class="align-middle text-center">From</th>
+                                <th class="align-middle text-center">Type</th>
+                                <th class="align-middle text-center">Name</th>
+                                <th class="align-middle text-center">Rate</th>
+                                <th class="align-middle text-center">Price</th>
+                                <th class="align-middle text-center">Online</th>
+                                <th class="align-middle text-center">ON</th>
+                                <th class="align-middle text-center">BC</th>
+                                <th class="align-middle text-center">QC</th>
+                                <th class="align-middle text-center">NS</th>
+                                <th class="align-middle text-center">Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small">
+                            {% for product in products %}
+                                {% include 'product.html' %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='bootstrap-5.2.3-dist/js/bootstrap.bundle.js') }}"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='datatables.min.js') }}"></script>
+
+    <script type='text/javascript'>
+        $(document).ready( function () {
+            $('#product-table').DataTable({
+                    columnDefs: [
+                        { orderable: false, targets: 0 },
+                        { orderable: false, targets: 1 },
+                        { orderable: false, targets: 2 },
+                        { orderable: false, targets: 6 },
+                        { orderable: false, targets: 7 },
+                        { orderable: false, targets: 8 },
+                        { orderable: false, targets: 9 },
+                        { orderable: false, targets: 10 }
+                    ],
+                    "order": [],
+                    "language": {
+                        "search": "Search:"
+                    },
+                    "pageLength": 25
+            });
+        });
+    </script>
+</body>
+</html>

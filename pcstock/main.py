@@ -2,7 +2,7 @@ from schedule import every, repeat, run_pending
 import time
 import subprocess
 
-@repeat(every(1).minutes)
+@repeat(every(1).days)
 def job():
     subprocess.run(['python3', 'run.py'])
 

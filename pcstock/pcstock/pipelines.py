@@ -5,10 +5,17 @@
 
 
 # useful for handling different item types with a single interface
+import os
+from contextlib import suppress
+
 import pymongo
+import scrapy
+from scrapy.pipelines.images import ImagesPipeline
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
-from pcstock.settings import MONGO_COLLECTION
+from pcstock.settings import MONGO_COLLECTION, IMAGES_STORE
+
+from PIL import Image
 
 class ProductPipeline:
 
@@ -36,7 +43,6 @@ class ProductPipeline:
         
         item.setdefault('rate', 0.0)
 
-        print(item['name'])
         if not self.db[self.collection_name].find_one(
             {
                 "source": item["source"],
@@ -48,3 +54,25 @@ class ProductPipeline:
             self.db[self.collection_name].update_one({"name": item["name"]}, {"$set": ItemAdapter(item).asdict()})
 
         return item
+
+class ProductImagePipeline(ImagesPipeline):
+
+    def get_media_requests(self, item, info):
+        for image_url in item['image_urls']:
+            yield scrapy.Request(image_url)
+    
+    def item_completed(self, results, item, info):
+        with suppress(KeyError):
+            ItemAdapter(item)[self.images_result_field] = [x for ok, x in results if ok]
+
+            image_paths = [x['path'] for ok, x in results if ok]
+
+            for img_path in image_paths:
+                path = os.path.join(IMAGES_STORE, img_path)
+                img = Image.open(path)
+                img.thumbnail((75, 75), Image.ANTIALIAS)
+                img.save(path)
+
+            item['images'] = item['images'][0]['path'].split('/')[-1]
+
+            return item

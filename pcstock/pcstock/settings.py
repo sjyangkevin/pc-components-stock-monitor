@@ -66,6 +66,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+   'pcstock.pipelines.ProductImagePipeline': 200,
    'pcstock.pipelines.ProductPipeline': 300,
 }
 
@@ -112,3 +113,7 @@ USER_AGENTS = [
 MONGO_URI = f'mongodb://{os.environ.get("MONGO_USERNAME")}:{os.environ.get("MONGO_PASSWORD")}@mongo:27017/'
 MONGO_DATABASE = os.environ.get('MONGO_DATABASE')
 MONGO_COLLECTION = os.environ.get('PRODUCT_COLLECTION')
+
+# Set up image store
+IMAGES_STORE = os.environ.get('IMAGE_DOWNLOAD_PATH')
+IMAGES_EXPIRES = 30

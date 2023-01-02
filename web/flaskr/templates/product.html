@@ -14,7 +14,8 @@
         {% endif %}
     </td>
     <td class="align-middle text-center">
-        {{ product['type'] }}
+        {% set img_path = "images/products/" + product['images'] %}
+        <img src="{{ url_for('static', filename=img_path) }}">
     </td>
     <td class="align-middle text-start">
         {{ product['name'] }}

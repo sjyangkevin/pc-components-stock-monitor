@@ -60,6 +60,10 @@ class BBGraphicCardSpider(scrapy.Spider):
             'type',
             'GPU'
         )
+        loader.add_value(
+            'image_urls',
+            [response.xpath('//div[@class = "displayingImage_3xp0y"]/img[@class = "productImage_1NbKv"]/@src').extract_first()]
+        )
         loader.add_value('name', response.meta.get('name'))
         loader.add_value('link', response.url)
         loader.add_value('rate', response.meta.get('rate'))

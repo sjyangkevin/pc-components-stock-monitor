@@ -33,7 +33,9 @@ class NEGraphicCardSpider(scrapy.Spider):
 
         rate = response.xpath(
             '//div[@class = "product-rating"]/i[contains(@class, "rating")]/@title'
-        ).get().split(' ')[0]
+        ).get()
+
+        rate = rate.split(' ')[0] if rate else 0.0
 
         item_price_comb = response.xpath(
             '//div[@class = "product-price"]//li[@class = "price-current"]'
@@ -52,6 +54,10 @@ class NEGraphicCardSpider(scrapy.Spider):
         loader.add_value(
             'type',
             'GPU'
+        )
+        loader.add_value(
+            'image_urls',
+            [response.xpath('//div[@class = "swiper-zoom-container"]/img[@class = "product-view-img-original"]/@src').extract_first()]
         )
         loader.add_xpath(
             'name',

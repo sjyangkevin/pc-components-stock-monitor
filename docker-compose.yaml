@@ -26,6 +26,10 @@ services:
       MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGO_DATABASE: ${MONGO_INITDB_DATABASE}
       PRODUCT_COLLECTION: ${PRODUCT_COLLECTION}
+      IMAGE_DOWNLOAD_PATH: ${IMAGE_DOWNLOAD_PATH}
+    volumes:
+      - ./pcstock:/usr/src/app
+      - ./web/flaskr/static/images/products:${IMAGE_DOWNLOAD_PATH}/full
       
   mongo:
     image: mongo

@@ -15,3 +15,6 @@ build/
 
 mongo/db
 mongo/mongod.conf
+
+web/flaskr/static/images/products/*
+pcstock/images/

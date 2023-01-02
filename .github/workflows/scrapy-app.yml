@@ -1,0 +1,74 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      working-directory: ./pcstock
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      working-directory: ./pcstock
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      working-directory: ./pcstock
+      run: |
+        pytest
+    - name: Docker Login
+      # You may pin to the exact commit or the version.
+      # uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+      uses: docker/login-action@v2.1.0
+      with:
+        # Username used to log against the Docker registry
+        username: ${{ secrets.DOCKER_USERNAME }}
+        # Password or personal access token used to log against the Docker registry
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Docker Metadata action
+      id: meta
+      # You may pin to the exact commit or the version.
+      # uses: docker/metadata-action@57396166ad8aefe6098280995947635806a0e6ea
+      uses: docker/metadata-action@v4.1.1
+      with:
+        # List of Docker images to use as base name for tags
+        images: kevinsjy997/pc-stock-viewer-scrapy
+    - name: Build and push Docker images
+      # You may pin to the exact commit or the version.
+      # uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5
+      uses: docker/build-push-action@v3.2.0
+      with:
+        context: ./pcstock
+        # List of metadata for an image
+        labels: ${{ steps.meta.outputs.labels }}
+        # Push is a shorthand for --output=type=registry
+        push: true
+        # List of tags
+        tags: ${{ steps.meta.outputs.tags }}
+
+    
+    

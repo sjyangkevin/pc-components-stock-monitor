@@ -21,6 +21,10 @@ class Product(scrapy.Item):
         output_processor=TakeFirst()
     )
 
+    image_urls = scrapy.Field()
+
+    images = scrapy.Field()
+
     name = Field(
         input_processor=MapCompose(remove_tags),
         output_processor=TakeFirst()

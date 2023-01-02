@@ -6,7 +6,7 @@ from scrapy.loader import ItemLoader
 
 class CCGraphicCardSpider(scrapy.Spider):
     name = "cc_graphic_card"
-
+    
     def start_requests(self):
     
         page_num = 1
@@ -69,6 +69,10 @@ class CCGraphicCardSpider(scrapy.Spider):
         loader.add_value(
             'type',
             'GPU'
+        )
+        loader.add_value(
+            'image_urls',
+            [response.xpath('//div[@class = "img-container"]/img[contains(@src, "75x75")]/@src').extract_first()]
         )
         loader.add_xpath(
             'name', 

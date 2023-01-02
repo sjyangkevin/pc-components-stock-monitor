@@ -6,7 +6,7 @@
 import scrapy
 from scrapy.item import Field
 
-from itemloaders.processors import MapCompose, Join, TakeFirst
+from itemloaders.processors import MapCompose, TakeFirst
 from w3lib.html import remove_tags
 
 from pcstock.utils import parse_currency, parse_rating

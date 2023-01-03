@@ -297,7 +297,7 @@ def index():
 
     client   = get_db()
     db       = client[current_app.config.get('MONGO_DATABASE')]
-    products = db['products']
+    products = db[current_app.config.get('MONGO_COLLECTION')]
 
     if request.method == 'GET':
 

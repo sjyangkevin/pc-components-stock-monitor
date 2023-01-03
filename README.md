@@ -21,7 +21,7 @@
   <li><code>ME_CONFIG_BASICAUTH_PASSWORD</code>: password for login to the Mongo Express</li>
   <li><code>PRODUCT_COLLECTION</code>: the collection used to storing the collected data</li>
   <li><code>SECRET_KEY</code>: the secret key for the Flask application</li>
-  <li><code>IMAGE_DOWNLOAD_PATH</code>: the path to store the downloaded images regarding the collected items </li>
+  <li><code>IMAGE_DOWNLOAD_PATH</code>: the path to store the downloaded images regarding the collected items. For now, this need to be set to <code>/usr/src/app/images</code></li>
 </ul>
 
 <p style="text-justify">After that, go to the project root directory, and run <code>docker compose up</code></p>

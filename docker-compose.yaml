@@ -2,7 +2,8 @@ version: '3.1'
 
 services:
   flask:
-    build: ./web
+    # build: ./web
+    image: kevinsjy997/pc-stock-viewer-flask:main
     depends_on:
       - mongo
       - scrapy
@@ -18,7 +19,8 @@ services:
       - ./web:/usr/src/app
 
   scrapy:
-    build: ./pcstock
+    image: kevinsjy997/pc-stock-viewer-scrapy:main
+    # build: ./pcstock
     depends_on:
       - mongo
     environment:

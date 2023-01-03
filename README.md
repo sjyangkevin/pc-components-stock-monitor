@@ -27,6 +27,13 @@
 <p style="text-justify">After that, go to the project root directory, and run <code>docker compose up</code></p>
 <p style="text-justify">Lastly, after all the services start running, go to the browser and visit <code>http://localhost:5000/</code></p>
 
+## How to run the spiders manually
+
+<p style="text-justify">At the startup of the application, there is nothing shown in the web page. It is because the spiders are not being run yet. The spiders can be run manually by connecting to the Scrapy container using the following way</p>
+<p style="text-justify">Run <code>docker ps</code> to find out the container ID </p>
+<p style="text-justify">Run <code>docker exec -it "container_id" bash</code></p>
+<p style="text-justify">A single spider can be run by invoking <code>scrapy crawl "spider_name"</code> or by invoking the python script by <code>python3 run.py</code> to execute all the spiders.</p>
+
 ## Future Works
 <ul>
   <li>Refactoring the project structure and make the configuration more cleaner</li>

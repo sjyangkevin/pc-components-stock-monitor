@@ -1,4 +1,4 @@
-# pc-components-stock-monitor
+# pc-components-stock-viewer
 
 <p style="text-justify">A web application that shows the stock information of PC components (e.g., CPUs, GPUs). The webpage is implemented in <code>Flask</code> and users can filter, sort, and search for a specific type of hardware. A <code>Scrapy</code> application is running at the backend to collect data periodically. Data will be stored in a <code>MongoDB</code> instance, and newly collected data will update the existing records in the MongoDB and the latest update time will be provided. Currently, the application is only collecting <code>graphic card</code> stock, but it will be developed to collect stock information for other hardware such as CPUs and memory.</p>
 
